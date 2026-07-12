@@ -8,7 +8,7 @@ startBtn.addEventListener("click", () => {
 
     music.play();
 
-    document.querySelector(".letter").scrollIntoView({
+    document.querySelector(".gallery").scrollIntoView({
         behavior: "smooth"
     });
 
