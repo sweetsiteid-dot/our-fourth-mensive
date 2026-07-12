@@ -318,6 +318,26 @@ body::before{
     }
 }
 
+.falling{
+    position:fixed;
+    top:-50px;
+    pointer-events:none;
+    z-index:9999;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-50px) rotate(0deg);
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(120vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
 /* MOBILE */
 
 @media(max-width:768px){
