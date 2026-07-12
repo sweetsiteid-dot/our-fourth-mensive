@@ -13,20 +13,61 @@ openBtn.addEventListener("click", () => {
 
     music.play();
 
-    opening.style.opacity = "0";
-    opening.style.transition = "1s";
+    /* LOVE + STAR FALLING */
+
+    for(let i = 0; i < 80; i++){
+
+        const item = document.createElement("div");
+
+        const icons = [
+            "🤍",
+            "✨",
+            "⭐",
+            "♡"
+        ];
+
+        item.innerHTML =
+        icons[Math.floor(Math.random()*icons.length)];
+
+        item.classList.add("falling");
+
+        item.style.left =
+        Math.random()*100 + "vw";
+
+        item.style.fontSize =
+        (Math.random()*20 + 20) + "px";
+
+        item.style.animationDuration =
+        (Math.random()*2 + 2) + "s";
+
+        document.body.appendChild(item);
+
+        setTimeout(() => {
+            item.remove();
+        }, 4000);
+
+    }
+
+    /* TRANSITION */
 
     setTimeout(() => {
 
-        opening.style.display = "none";
-        mainContent.style.display = "block";
+        opening.style.opacity = "0";
+        opening.style.transition = "1s";
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        setTimeout(() => {
 
-    }, 1000);
+            opening.style.display = "none";
+            mainContent.style.display = "block";
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        },1000);
+
+    },2000);
 
 });
 
