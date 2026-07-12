@@ -1,54 +1,97 @@
-const startBtn = document.getElementById("startBtn");
-const musicBtn = document.getElementById("musicBtn");
+const openBtn = document.getElementById("openBtn");
+const opening = document.getElementById("opening");
+const mainContent = document.getElementById("mainContent");
+
 const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
-/* OPEN LETTER + PLAY MUSIC */
+const memoryBtn = document.getElementById("memoryBtn");
 
-startBtn.addEventListener("click", () => {
+/* OPEN WEBSITE */
+
+openBtn.addEventListener("click", () => {
 
     music.play();
 
-    document.querySelector(".gallery").scrollIntoView({
+    opening.style.opacity = "0";
+    opening.style.transition = "1s";
+
+    setTimeout(() => {
+
+        opening.style.display = "none";
+        mainContent.style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }, 1000);
+
+});
+
+/* MEMORY BUTTON */
+
+memoryBtn.addEventListener("click", () => {
+
+    document.getElementById("memories")
+    .scrollIntoView({
         behavior: "smooth"
     });
 
 });
 
-/* PLAY / PAUSE BUTTON */
+/* MUSIC BUTTON */
 
 musicBtn.addEventListener("click", () => {
 
     if (music.paused) {
+
         music.play();
         musicBtn.innerHTML = "⏸ Pause Music";
+
     } else {
+
         music.pause();
         musicBtn.innerHTML = "🎵 Play Music";
+
     }
 
 });
 
-/* REVEAL ANIMATION */
+/* AUTO SLIDER */
 
-const reveals = document.querySelectorAll(".reveal");
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
 
-function revealElements() {
+let currentSlide = 0;
 
-    reveals.forEach((element) => {
+function showSlide(index) {
 
-        const windowHeight = window.innerHeight;
-        const top = element.getBoundingClientRect().top;
-
-        if (top < windowHeight - 100) {
-            element.classList.add("active");
-        }
-
+    slides.forEach((slide) => {
+        slide.classList.remove("active");
     });
+
+    dots.forEach((dot) => {
+        dot.classList.remove("active");
+    });
+
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
 
 }
 
-window.addEventListener("scroll", revealElements);
-revealElements();
+setInterval(() => {
+
+    currentSlide++;
+
+    if (currentSlide >= slides.length) {
+        currentSlide = 0;
+    }
+
+    showSlide(currentSlide);
+
+}, 3000);
 
 /* FLOATING HEARTS */
 
@@ -59,15 +102,20 @@ function createHeart() {
     const heart = document.createElement("div");
 
     heart.classList.add("heart");
-    heart.innerHTML = "❤";
 
-    heart.style.left = Math.random() * 100 + "%";
+    const icons = ["🤍", "♡", "♥"];
+
+    heart.innerHTML =
+        icons[Math.floor(Math.random() * icons.length)];
+
+    heart.style.left =
+        Math.random() * 100 + "%";
 
     heart.style.fontSize =
-        Math.random() * 25 + 15 + "px";
+        Math.random() * 20 + 18 + "px";
 
     heart.style.animationDuration =
-        Math.random() * 5 + 7 + "s";
+        Math.random() * 5 + 8 + "s";
 
     heartsContainer.appendChild(heart);
 
@@ -77,24 +125,8 @@ function createHeart() {
 
 }
 
-setInterval(createHeart, 500);
+setInterval(createHeart, 700);
 
-/* CHANGE BUTTON TEXT WHEN SONG ENDS */
+/* INITIAL */
 
-music.addEventListener("ended", () => {
-    musicBtn.innerHTML = "🎵 Play Music";
-});
-
-/* AUTO REVEAL HERO */
-
-window.addEventListener("load", () => {
-
-    document.querySelectorAll(".reveal").forEach((el, i) => {
-
-        setTimeout(() => {
-            el.classList.add("active");
-        }, i * 150);
-
-    });
-
-});
+showSlide(0);
